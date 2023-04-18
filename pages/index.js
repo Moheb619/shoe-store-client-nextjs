@@ -5,7 +5,6 @@ import { useState } from "react";
 import { fetchDataFromApi } from "@/utils/api";
 
 export default function Home({ product_data }) {
-  console.log(product_data);
   return (
     <main className="">
       <HeroBanner></HeroBanner>

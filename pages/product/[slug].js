@@ -13,7 +13,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 
 const ProductDetails = ({ product, products }) => {
-  console.log(product, " try ", products);
   const p = product?.[0];
   const [selectedSize, setSelectedSize] = useState();
   const [showError, setShowError] = useState(false);

@@ -8,7 +8,7 @@ const maxResult = 3;
 
 const Category = ({ category, product, slug }) => {
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, error, isLoading } = useSWR(`api/product/get-products?slug=${slug}`, fetchDataFromApi, {
+  const { data, error, isLoading } = useSWR(`api/product/get-categorized-products/${slug}`, fetchDataFromApi, {
     fallbackData: product,
   });
   const { query } = useRouter();
@@ -26,7 +26,7 @@ const Category = ({ category, product, slug }) => {
         {/* products grid start */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
           {data?.map((p) => (
-            <ProductCard key={p?.id} data={p} />
+            <ProductCard key={p?.product?.id} data={p?.product} />
           ))}
         </div>
         {/* products grid end */}
@@ -78,8 +78,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug } }) {
   const category = await fetchDataFromApi(`api/category/get-categories?slug=${slug}`);
-  const product = await fetchDataFromApi(`api/product/get-products?slug=${slug}`);
-
+  const product = await fetchDataFromApi(`api/product/get-categorized-products/${slug}`);
   return {
     // Passed to the page component as props
     props: { category, product, slug },

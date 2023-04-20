@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 import Wrapper from "./Wrapper";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -48,17 +49,21 @@ const Footer = () => {
         {/* RIGHT START */}
         <div className="flex gap-4 justify-center md:justify-start">
           <div className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
-            <FaFacebookF size={20} />
+            <Link href="https://www.facebook.com/Moheb619" passHref target="_blank">
+              <FaFacebookF size={20} />
+            </Link>
           </div>
           <div className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
-            <FaTwitter size={20} />
+            <Link href="https://www.instagram.com/moheb619" passHref target="_blank">
+              <FaTwitter size={20} />
+            </Link>
           </div>
-          <div className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
+          {/* <div className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
             <FaYoutube size={20} />
           </div>
           <div className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
             <FaInstagram size={20} />
-          </div>
+          </div> */}
         </div>
         {/* RIGHT END */}
       </Wrapper>

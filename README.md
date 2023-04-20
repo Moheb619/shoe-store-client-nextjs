@@ -12,4 +12,4 @@ This is a Shoe Store (Ecommerce site) created with Next JS as frontend and Expre
 - Mongodb
 
 ## Live
-[Online Shop Store](shoe-store-client-nextjs.vercel.app)
+[Shoe Store by Next Js](https://shoe-store-client-nextjs.vercel.app)

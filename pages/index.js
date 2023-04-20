@@ -1,10 +1,36 @@
 import HeroBanner from "@/components/HeroBanner";
 import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { fetchDataFromApi } from "@/utils/api";
-
+import { useInView, motion, stagger, useAnimation } from "framer-motion";
 export default function Home({ product_data }) {
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [controls, isInView]);
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.3,
+      },
+    },
+  };
+
+  const item = {
+    hidden: {
+      scale: 0,
+    },
+    visible: {
+      scale: 1,
+    },
+  };
   return (
     <main className="">
       <HeroBanner></HeroBanner>
@@ -17,11 +43,13 @@ export default function Home({ product_data }) {
         {/* heading and paragaph end */}
 
         {/* products grid start */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
+        <motion.div variants={container} initial="hidden" animate={controls} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
           {product_data?.map((product) => (
-            <ProductCard key={product.id} data={product} />
+            <motion.div ref={ref} variants={item}>
+              <ProductCard key={product.id} data={product} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
         {/* products grid end */}
       </Wrapper>
     </main>

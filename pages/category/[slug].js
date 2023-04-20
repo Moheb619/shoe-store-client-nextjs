@@ -2,19 +2,36 @@ import ProductCard from "@/components/ProductCard";
 import Wrapper from "@/components/Wrapper";
 import { fetchDataFromApi } from "@/utils/api";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { inView, motion, useAnimation, useInView } from "framer-motion";
 import useSWR from "swr";
 const maxResult = 3;
 
 const Category = ({ category, product, slug }) => {
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const productsVariant = {
+    hidden: { x: -200, opacity: 0 },
+    visible: { x: 0, opacity: 1 },
+  };
   const [pageIndex, setPageIndex] = useState(1);
   const { data, error, isLoading } = useSWR(`api/product/get-categorized-products/${slug}`, fetchDataFromApi, {
     fallbackData: product,
   });
   const { query } = useRouter();
+  const cardsKey = query.slug || "all";
   useEffect(() => {
     setPageIndex(1);
   }, [query]);
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [controls, query, isInView]);
 
   return (
     <div className="w-full md:py-20 relative">
@@ -24,11 +41,11 @@ const Category = ({ category, product, slug }) => {
         </div>
 
         {/* products grid start */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
+        <motion.div key={cardsKey} ref={ref} variants={productsVariant} initial="hidden" animate={controls} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0">
           {data?.map((p) => (
             <ProductCard key={p?.product?.id} data={p?.product} />
           ))}
-        </div>
+        </motion.div>
         {/* products grid end */}
 
         {/* PAGINATION BUTTONS START */}

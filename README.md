@@ -1,3 +1,5 @@
+Front End part of the Shoe Store site.
+
 ## Summary
 This is a Shoe Store (Ecommerce site) created with Next JS as frontend and Express Js as Backend
 
